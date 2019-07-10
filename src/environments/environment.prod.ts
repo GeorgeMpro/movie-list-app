@@ -1,4 +1,4 @@
 export const environment = {
-  production: true
-  //  todo add prod URL
+    production: true,
+    listApiUrl: 'https://yts.lt/api/v2/list_movies.json?'
 };

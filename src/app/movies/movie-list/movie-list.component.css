@@ -1,0 +1,43 @@
+
+table {
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+
+th {
+    font-family: 'Anton', sans-serif;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+mat-paginator {
+    margin-top: 1rem;
+}
+
+tr.detail-row {
+    height: 0;
+}
+
+/*todo delete color and keep buttons?*/
+tr.movie-row:not(.example-expanded-row):hover {
+    background: #f7e6fa;
+}
+
+tr.movie-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.movie-row td {
+    border-bottom-width: 0;
+}
+
+.movie-detail {
+    overflow: hidden;
+}

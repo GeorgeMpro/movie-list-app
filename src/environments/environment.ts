@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-//  todo add URL
+    production: false,
+    listApiUrl: 'https://yts.lt/api/v2/list_movies.json?'
 };
 
 /*
