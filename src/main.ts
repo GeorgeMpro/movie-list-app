@@ -1,4 +1,3 @@
-// todo del?
 import 'hammerjs';
 
 import {enableProdMode} from '@angular/core';

@@ -6,6 +6,9 @@ import {map} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {Movie} from './movie.model';
 
+/**
+ * Utility class for handling http requests and updates to and from the movies API.
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -19,6 +22,9 @@ export class MovieService {
     constructor(private http: HttpClient) {
     }
 
+    /**
+     * Get movie list from server.
+     */
     getAllMovies() {
         const queryParams = '?limit=50';
         return this.http.get<{ data: { movie_count: number, limit: number, page_number: number, movies: any[] } }>(
@@ -28,9 +34,13 @@ export class MovieService {
                 map(response => {
                     return this.transformMovies(response);
                 }))
-            .subscribe(this.getMoviesList());
+            .subscribe(this.getTransformedMoviesList());
     }
 
+    /**
+     * Get information about a single movie.
+     * @param title - movie title (name)
+     */
     getMovieInfo(title: string) {
         const queryParams = `query_term=${title}`;
         this.http.get<{}>(this.BACKEND_URL + queryParams)
@@ -47,17 +57,30 @@ export class MovieService {
         };
     }
 
+    /**
+     * Get information about several movies of the same genre.
+     * @param genre - movie genre
+     */
     getGenreMovies(genre: string) {
         const movieReturnLimit = 10;
         const queryParams = `genre=${genre}&limit=${movieReturnLimit}`;
         this.http.get <{}>(this.BACKEND_URL + queryParams)
-            .subscribe(this.getMoviesInfoByGenere());
+            .subscribe(this.getMoviesInfoByGenre());
     }
 
-    private getMoviesInfoByGenere() {
+    private getMoviesInfoByGenre() {
         return (response: { data }) => {
             this.movieInfo = this.transformMovies(response).transformedMovies;
             this.moviesInfoUpdate.next({moviesInfo: [...this.movieInfo]});
+        };
+    }
+
+    private getTransformedMoviesList() {
+        return transformed => {
+            this.movies = transformed.transformedMovies;
+            this.moviesUpdate.next({
+                movies: [...this.movies]
+            });
         };
     }
 
@@ -66,15 +89,6 @@ export class MovieService {
             transformedMovies: response.data.movies.map(movie => {
                 return this.transformMovie(movie);
             })
-        };
-    }
-
-    private getMoviesList() {
-        return transformed => {
-            this.movies = transformed.transformedMovies;
-            this.moviesUpdate.next({
-                movies: [...this.movies]
-            });
         };
     }
 
@@ -91,10 +105,16 @@ export class MovieService {
         };
     }
 
+    /**
+     * Get an observable for movie list updates.
+     */
     getMoviesUpdateListener() {
         return this.moviesUpdate.asObservable();
     }
 
+    /**
+     * Get an observable for expanded inner movie list updates.
+     */
     getMoviesInfoUpdateListener() {
         return this.moviesInfoUpdate.asObservable();
     }

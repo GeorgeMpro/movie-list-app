@@ -25,7 +25,6 @@ tr.detail-row {
     height: 0;
 }
 
-/*todo delete color and keep buttons?*/
 tr.movie-row:not(.example-expanded-row):hover {
     background: #f7e6fa;
 }

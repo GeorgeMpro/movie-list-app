@@ -1,6 +1,9 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 
+/**
+ * Utility class for displaying error dialog.
+ */
 @Component({
     templateUrl: './error.component.html'
 })

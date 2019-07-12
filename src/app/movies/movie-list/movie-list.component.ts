@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {interval, Observable, Subscription} from 'rxjs';
+import {interval, Subscription} from 'rxjs';
 
 import {Movie} from '../movie.model';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
@@ -20,16 +20,15 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ],
 })
 export class MovieListComponent implements OnInit, OnDestroy {
-
-
     private movies: Movie[];
-    private dataSource: MatTableDataSource<Movie>;
-    private paginator: MatPaginator;
     private sort: MatSort;
+    private paginator: MatPaginator;
+    dataSource: MatTableDataSource<Movie>;
     paginatorDisplaySize: number[] = [5, 10, 20];
     columnsToDisplay: string[] = ['code', 'title', 'year', 'genre', 'rating'];
     expandedMovie: Movie | null;
-    private isLoading = false;
+    isLoading = false;
+
     private moviesSubscription: Subscription;
     private moviesUpdateRequestSubscription: Subscription;
 
@@ -40,13 +39,11 @@ export class MovieListComponent implements OnInit, OnDestroy {
     @ViewChild(MatPaginator, {static: false}) set matPaginator(mp: MatPaginator) {
         this.paginator = mp;
         if (this.dataSource) {
-            this.setupTable();
+            this.setupTableFunctionality();
         }
     }
 
-
-    constructor(
-        private movieService: MovieService) {
+    constructor(private movieService: MovieService) {
     }
 
     ngOnInit() {
@@ -65,29 +62,41 @@ export class MovieListComponent implements OnInit, OnDestroy {
             });
     }
 
+    /**
+     * Sets an interval for requesting an update to the movie list after specified time.
+     */
     private requestMoviesUpdateAfterInterval() {
-        const moviesUpdatePeriod = 5 * 60 * 1000;
-        this.moviesUpdateRequestSubscription = interval(moviesUpdatePeriod)
+        const updateInterval = 5 * 60 * 1000;
+        this.moviesUpdateRequestSubscription = interval(updateInterval)
             .subscribe(() => {
                 this.movieService.getAllMovies();
             });
     }
 
-    private setupTable() {
+    private setupTableFunctionality() {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
     }
 
+    /**
+     * Filter the table according to value.
+     * @param filterValue - input value
+     */
     applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    /**
+     * Expand and collapse the movie information list row on click.
+     * @param expandedMovie - the state of expanded/collapsed row
+     * @param movie - the selected movie from list
+     */
+    onClick(expandedMovie: Movie, movie: any) {
+        this.expandedMovie = expandedMovie === movie ? null : movie;
     }
 
     ngOnDestroy(): void {
         this.moviesSubscription.unsubscribe();
         this.moviesUpdateRequestSubscription.unsubscribe();
-    }
-
-    onClick(expandedMovie: Movie, movie: any) {
-        this.expandedMovie = expandedMovie === movie ? null : movie;
     }
 }

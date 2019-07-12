@@ -8,6 +8,9 @@ const routes: Routes = [
     {path: 'genre/:movieGenre', component: MovieInfoComponent}
 ];
 
+/**
+ * Class for allowing lazy loading of the expandable movie information list component.
+ */
 @NgModule({
     imports: [
         RouterModule.forChild(routes)

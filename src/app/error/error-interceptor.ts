@@ -6,7 +6,7 @@ import {MatDialog} from '@angular/material';
 import {ErrorComponent} from './error.component';
 
 /**
- * An interceptor that goes with every outgoing request.
+ * An interceptor for every outgoing request.
  * Handles Http Errors.
  */
 @Injectable()
@@ -23,6 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if (errorFromCatch) {
                     errorMessage = errorFromCatch;
                 }
+
                 this.dialog.open(
                     ErrorComponent,
                     {data: {message: errorMessage}}

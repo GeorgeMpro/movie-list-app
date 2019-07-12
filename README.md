@@ -1,27 +1,22 @@
-# MovieApp
+## Movie Application
+
+<hr>
+
+<p>This repository is for a movie list application.</p>
+<p>The <a href="https://gmpro-movie-app.herokuapp.com/">live link</a> of the application.</p>
+
+
+### Getting Started
+<p>To run the project you will need:<br>
+  Run <code>npm install</code> to setup dependencies.<br>
+  Run <code>ng serve</code> to run in production mode and listen on localhost:4200</p>
+  <p>Run <code>ng build</code> to build the project. The build artifacts will be stored in the <i>dist/</i> directory. Use the <code>--prod</code> flag for a production build.</p>
+
+### Project Description
+<p>The application connectes to an existing API to get its movie list and details.</p>
+<p>The application has basic Http error handling.</p>
+
+### Used Technologies
+<p><b>Angular 8</b>, <b>Angular Material</b>, <b>RxJS</b>
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.0.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

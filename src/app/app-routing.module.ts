@@ -7,15 +7,11 @@ import {NgModule} from '@angular/core';
 const routes: Routes = [
     {
         path: '', component: MovieListComponent, children: [
-            {
-                path: '', loadChildren: './movies/movies.module#MoviesModule'
-            }
+            {path: '', loadChildren: './movies/movies.module#MoviesModule'}
         ]
     },
-    // todo add lazy loading when export
     {path: 'about', component: AboutComponent},
-    // {path: '**', redirectTo: ''}
-//    todo add error page and catching 404 with **
+    {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

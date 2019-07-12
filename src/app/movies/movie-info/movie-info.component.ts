@@ -11,26 +11,31 @@ import {MatTableDataSource} from '@angular/material';
     styleUrls: ['./movie-info.component.css']
 })
 export class MovieInfoComponent implements OnInit, OnDestroy {
+    private movies: Movie[] = [];
     private displayMode: string;
     private title = '';
     private genre = '';
-    private movies: Movie[] = [];
+    displayedColumns = ['code', 'genre', 'duration'];
+    dataSource: MatTableDataSource<Movie>;
+    isLoading = true;
     private urlUpdatesSubscription: Subscription;
     private moviesInfoUpdateSubscription: Subscription;
 
-    private displayedColumns = ['code', 'genre', 'duration'];
-    private dataSource: MatTableDataSource<Movie>;
-
-    private isLoading = true;
 
     constructor(private route: ActivatedRoute, private movieService: MovieService) {
     }
 
     ngOnInit() {
         this.isLoading = true;
+        this.urlUpdatesSubscription = this.route.url
+            .subscribe(this.getUrlUpdates());
 
+        this.moviesInfoUpdateSubscription = this.movieService.getMoviesInfoUpdateListener()
+            .subscribe(this.getMovieListUpdates());
+    }
 
-        this.urlUpdatesSubscription = this.route.url.subscribe((data: Params) => {
+    private getUrlUpdates() {
+        return (data: Params) => {
             this.setModeAndParam(data);
             if (this.displayMode === 'title') {
                 this.movieService.getMovieInfo(this.title);
@@ -38,15 +43,15 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
                 this.movieService.getGenreMovies(this.genre);
             }
 
-        });
+        };
+    }
 
-        this.moviesInfoUpdateSubscription = this.movieService.getMoviesInfoUpdateListener()
-            .subscribe(response => {
-                this.movies = response.moviesInfo;
-                this.dataSource = new MatTableDataSource(this.movies);
-                this.isLoading = false;
-            });
-
+    private getMovieListUpdates() {
+        return response => {
+            this.movies = response.moviesInfo;
+            this.dataSource = new MatTableDataSource(this.movies);
+            this.isLoading = false;
+        };
     }
 
     private setModeAndParam(data: Params) {
