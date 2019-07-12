@@ -3,8 +3,6 @@
 <hr>
 
 <p>This repository is for a movie list application.</p>
-<p>The <a href="https://gmpro-movie-app.herokuapp.com/">live link</a> of the application.</p>
-
 
 ### Getting Started
 <p>To run the project you will need:<br>
