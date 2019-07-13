@@ -3,6 +3,7 @@
 <hr>
 
 <p>This repository is for a movie list application.</p>
+<p>Go to live server <a href="https://movie-app-gmpro.herokuapp.com/">Live Server</a>.</p>
 
 ### Getting Started
 <p>To run the project you will need:<br>
